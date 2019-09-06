@@ -31,8 +31,9 @@ async function searchPosts(url, subreddit) {
         $('div#siteTable > div.thing').each(function (index) {
             const pontuation = $(this).attr('data-score');
             const title = $(this).find('p.title > a.title').text().trim();
-            const commentsLink = `https://old.reddit.com/r/${subreddit}/` + $(this).attr('data-permalink');
-            const threadLink = $(this).attr('data-url');
+            // TODO resolver bug no threadLink qd ele for relativo ao site do reddit (comentários)
+            const threadLink = $(this).find('p.title > a.title').attr('href');
+            const commentsLink = $(this).find('ul.flat-list.buttons > li.first > a.comments').attr('href');
 
             if (pontuation >= 5000) {
                 fs.appendFileSync('reddit.txt', subreddit + '\n' + title + '\n' + pontuation + '\n' + threadLink + '\n' + commentsLink + '\n');
