@@ -1,3 +1,7 @@
+function justify(line, limit) {
+    return line;
+}
+
 function styleMyString(limit, myString) {
     const charactersArray = myString.split(/[\s\n]/);
 
@@ -9,12 +13,12 @@ function styleMyString(limit, myString) {
         if ((line + ' ' + charactersArray[i]).length <= limit) {
             line = line + ' ' + charactersArray[i];
         } else {
-            result += line + '\n';
+            result += justify(line, limit) + '\n';
             line = charactersArray[i];
         }
     }
 
-    result += line + '\n';
+    result += justify(line, limit) + '\n';
 
     let lineBreakPositions = [];
 
@@ -29,7 +33,8 @@ function styleMyString(limit, myString) {
         characters.splice(lineBreakPositions[i], 0, '\n');
     }
 
-    return characters.join('');
+    result = characters.join('');
+    console.log(result);
 }
 
 styleMyString(40, "In the beginning God created the heavens and the earth. Now the earth was formless and empty, darkness was over the surface of the deep, and the Spirit of God was hovering over the waters.\n" +
