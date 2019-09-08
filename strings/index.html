@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>String Challenge</title>
+    <script src="index.js"></script>
+</head>
+<body>
+<h3>String Challenge</h3>
+
+<label for="parameter">Número máximo de caracteres por linha:</label>
+<br/>
+<input type="number" id="parameter" value="40">
+<br/>
+<label for="string">Seu texto:</label>
+<br/>
+<textarea id="string" name="string"
+          rows="20" cols="33">
+</textarea>
+<br/>
+<button type="button"
+        onclick="document.getElementById('result').innerText = styleMyString(document.getElementById('parameter').value, document.getElementById('string').value)">
+    Estilizar
+</button>
+
+<br/>
+<p>Resultado:</p>
+<br/>
+<pre id="result"></pre>
+</body>
+</html>
