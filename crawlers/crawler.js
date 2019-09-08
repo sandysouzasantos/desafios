@@ -13,14 +13,13 @@ if (arguments) {
 
     wantedSubreddits.forEach((subreddit) => {
         const subredditUrl = `${redditUrl}/r/${subreddit.toString()}/`;
-
-        searchPosts(subredditUrl, subreddit);
+        searchPosts(subredditUrl);
     });
 } else {
-    searchPosts(redditUrl + '/r/all/', 'all');
+    searchPosts(redditUrl + '/r/all/');
 }
 
-async function searchPosts(url, subreddit) {
+async function searchPosts(url) {
     try {
         const response = await request.get(url);
 
@@ -29,6 +28,7 @@ async function searchPosts(url, subreddit) {
         const $ = cheerio.load(dom);
 
         $('div#siteTable > div.thing').each(function (index) {
+            const subredditName = $(this).attr('data-subreddit-prefixed');
             const pontuation = $(this).attr('data-score');
             const title = $(this).find('p.title > a.title').text().trim();
             let threadLink = $(this).find('p.title > a.title').attr('href');
@@ -39,14 +39,13 @@ async function searchPosts(url, subreddit) {
             }
 
             if (pontuation >= 5000) {
-                fs.appendFileSync('reddit.txt', '/r/' + subreddit + '\n' +
+                fs.appendFileSync('reddit.txt', '/' + subredditName + '\n' +
                     'Title: ' + title + '\n' +
                     'Score: ' + pontuation + '\n' +
                     'Thread: ' + threadLink + '\n' +
                     'Comments: ' + commentsLink + '\n' + '\n');
             }
         });
-        console.log('Look at reddit.txt');
     } catch (error) {
         console.log("Error: " + error);
     }
