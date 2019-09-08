@@ -14,16 +14,4 @@ bot.on('message', (msg) => {
     bot.sendMessage(chatId, 'Received your message');
 });
 
-/*
-bot.on('text', (msg) => {
-    if (msg.text.toLowerCase().indexOf('/nadaprafazer') === 0) {
-        const chatId = msg.chat.id;
-        const subredditString = msg.slice(msg.indexOf(' '));
-        const subredditsArray = subredditString.split(';');
-        const response = 'oi';
 
-        //Aqui vai o código
-
-        bot.sendMessage(chatId, resp);
-    }
-});*/

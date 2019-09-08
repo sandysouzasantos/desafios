@@ -11,6 +11,8 @@ const arguments = process.argv[2];
 if (arguments) {
     const wantedSubreddits = arguments.split(';');
 
+    fs.writeFileSync('reddit.txt', 'New in reddit \n');
+
     wantedSubreddits.forEach((subreddit) => {
         const subredditUrl = `${redditUrl}/r/${subreddit.toString()}/`;
 
@@ -32,8 +34,12 @@ async function searchPosts(url, subreddit) {
             const pontuation = $(this).attr('data-score');
             const title = $(this).find('p.title > a.title').text().trim();
             // TODO resolver bug no threadLink qd ele for relativo ao site do reddit (comentários)
-            const threadLink = $(this).find('p.title > a.title').attr('href');
+            let threadLink = $(this).find('p.title > a.title').attr('href');
             const commentsLink = $(this).find('ul.flat-list.buttons > li.first > a.comments').attr('href');
+
+            if(commentsLink.indexOf(threadLink) !== -1) {
+                threadLink = commentsLink;
+            }
 
             if (pontuation >= 5000) {
                 fs.appendFileSync('reddit.txt', subreddit + '\n' + title + '\n' + pontuation + '\n' + threadLink + '\n' + commentsLink + '\n');
