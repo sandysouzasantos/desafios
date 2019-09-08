@@ -11,25 +11,22 @@ bot.onText(/\/NadaPraFazer/, (msg) => {
     const chatId = msg.chat.id;
     const subredditsString = msg.text.slice(14);
     const wantedSubreddits = subredditsString.split(';');
-    const redditUrl = 'https://old.reddit.com';
 
-    if (wantedSubreddits.length > 0) {
+    if (wantedSubreddits.length > 0 && wantedSubreddits[0] !== '') {
         wantedSubreddits.forEach((subreddit) => {
             const subredditUrl = `${redditUrl}/r/${subreddit.toString()}/`;
-            searchPosts(subreddit, subredditUrl, chatId);
+            searchPosts(subredditUrl, chatId);
         });
     } else {
-        console.log(redditUrl + '/r/all');
-        searchPosts('all', `${redditUrl}/r/all/`, chatId);
+        searchPosts(`${redditUrl}/r/all`, chatId);
     }
 });
 
-function searchPosts(subreddit, subredditUrl, chatId) {
+function searchPosts(subredditUrl, chatId) {
     request
         .get(subredditUrl)
         .end((err, response) => {
             if (err) {
-                console.log(err);
                 bot.sendMessage(chatId, 'Unable to process your request');
             }
 
@@ -38,9 +35,9 @@ function searchPosts(subreddit, subredditUrl, chatId) {
             const $ = cheerio.load(dom);
 
             $('div#siteTable > div.thing').each(function (index) {
+                const subredditName = $(this).attr('data-subreddit-prefixed');
                 const pontuation = $(this).attr('data-score');
                 const title = $(this).find('p.title > a.title').text().trim();
-                // TODO resolver bug no threadLink qd ele for relativo ao site do reddit (comentários)
                 let threadLink = $(this).find('p.title > a.title').attr('href');
                 const commentsLink = $(this).find('ul.flat-list.buttons > li.first > a.comments').attr('href');
 
@@ -51,7 +48,7 @@ function searchPosts(subreddit, subredditUrl, chatId) {
                 if (pontuation >= 5000) {
                     bot
                         .sendMessage(chatId,
-                            "<b>/r/" + subreddit + "</b>\n<b>Title:</b> " + title + "\n<b>Score:</b> " + pontuation + " votes\n<b>Thread:</b> " + threadLink + "\n<b>Comments:</b> " + commentsLink + "\n",
+                            "<b>/" + subredditName + "</b>\n<b>Title:</b> " + title + "\n<b>Score:</b> " + pontuation + " votes\n<b>Thread:</b> " + threadLink + "\n<b>Comments:</b> " + commentsLink + "\n",
                             {parse_mode: "HTML"});
                 }
             });
