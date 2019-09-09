@@ -2,7 +2,7 @@
 
 ## Como executar esse código
 
-Execute o arquivo html em seu browser (chrome ou firefox) e insira o número máximo de caracteres por linha e o texto desejado conforme os campos informados.
+Execute o arquivo html em seu browser (chrome ou firefox) e insira o número máximo de caracteres por linha (default: 40) e o texto desejado conforme os campos informados.
 Clique no botão 'Estilizar'.
 
 O resultado irá aparecer conforme os parâmetros informados e justificado.

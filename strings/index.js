@@ -1,16 +1,13 @@
 function styleMyString(limit, myString) {
     myString = myString.trim();
-    // Cria um array com todas as palavras da string dada.
     const wordsArray = myString.split(/[\s\n\t]/);
-    // Variável na qual as linhas já cortadas de acordo com o número de caracteres serão salvas.
     let result = '';
-    // Variável na qual as palavras serão adicionadas até o limite de caracteres, já começando na primeira palavra.
     let line = wordsArray[0];
 
     // Para cada palavra do array, adicioná-la em 'line' até o limite de caracteres.
     for (let i = 1; i < wordsArray.length; i += 1) {
         if ((line + ' ' + wordsArray[i]).length <= limit) {
-            // Caso ocorra de alguma elemento do array ser vazio, finalizar a linha atual e começar uma nova.
+            // Caso ocorra de algum elemento do array ser vazio, finalizar a linha atual e começar uma nova.
             if (wordsArray[i].length === 0) {
                 result += line + '\n';
                 line = '';
@@ -51,13 +48,17 @@ function styleMyString(limit, myString) {
 }
 
 function justify(line, limit) {
-    if (line.length === 0) {
+    if (line.trim().length === 0) {
         return line;
     }
 
-    // Descobre quantos caracteres faltam para a frase aatingir o limite de caracteres.
-    let missingSpaces = limit - line.length;
     const words = line.split(' ');
+    // Se a linha contém apenas uma palavra, ela é retornada.
+    if (words.length < 2) {
+        return line;
+    }
+
+    let missingSpaces = limit - line.length;
 
     // Enquanto for possível acrescentar espaços à string, um espaço será adicionado ao final de cada palavra com exceção da última.
     while (missingSpaces > 0) {
