@@ -3,7 +3,7 @@ const request = require('superagent');
 const cheerio = require('cheerio');
 const htmlparser2 = require('htmlparser2');
 
-const token = `900183712:AAEyxnb6GX-M-gbenltgSMB0UTzJAPiA1Xg`;
+const token = ``;
 const redditUrl = 'https://old.reddit.com';
 const bot = new TelegramBot(token, {polling: true});
 
